@@ -37,5 +37,20 @@ struct Networking {
         
     }
     
+//    static func fetchPhoto<T>(url : URL, _ modelType: T.Type, competionHandler: @escaping (Result <T, Error>) -> Void) where T : Codable {
+//        let session = URLSession.shared
+//        session.dataTask(with: url) { (data, response, error)
+//            in
+//            guard let data = data, let response = response else {return}
+//        
+//            do {
+//                let photoData = try JSONDecoder().decode(T.self, from: data)
+//                competionHandler(.success(photoData))
+//            } catch let jsonError {
+//                competionHandler(.failure(jsonError))
+//            }
+//            
+//        }.resume()
+//    }
     
 }

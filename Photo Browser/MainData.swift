@@ -25,4 +25,14 @@ struct Photo: Codable {
     let farm: Int
     let title: String
     let ispublic, isfriend, isfamily: Int
+    
+}
+
+extension Photo {
+//    https://live.staticflickr.com/{server-id}/{id}_{secret}_{size-suffix}.jpg
+    var fullSizeURL: URL? {
+        guard var urlComponents = URLComponents(string: "https://live.staticflickr.com") else { return nil }
+        urlComponents.path = "\(self.server)/\(self.id)_\(self.secret)_w.jpg"
+        return urlComponents.url
+    }
 }

@@ -12,6 +12,7 @@ class MainScreenVC: UIViewController {
     
     let cellID = "ImageCell"
     var results : [Photo] = []
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,10 +23,7 @@ class MainScreenVC: UIViewController {
             switch result {
             case .success(let photoData):
                 self.results.append(contentsOf: photoData.photos.photo)
-                DispatchQueue.main.async {
-                    self.collectionView.reloadData()
-                    print(self.results)
-                }
+                print(photoData.photos.photo.map({$0.fullSizeURL}))
             case .failure(let err):
                 print(err)
             }
