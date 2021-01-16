@@ -46,7 +46,7 @@ extension PhotosAPITarget: APITarget {
     }
     
     var queryItems: [URLQueryItem]? {
-        var queryItem : [URLQueryItem] = [URLQueryItem(name: "method", value: "flickr.photos.getRecent"), URLQueryItem(name: "api_key", value: "8c5d03d43a4e14e8b80aafc5a1120f4b"), URLQueryItem(name: "format", value: "json"), URLQueryItem(name: "nojsoncallback", value: "1")]
+        var queryItem : [URLQueryItem] = [URLQueryItem(name: "method", value: "flickr.photos.getRecent"), URLQueryItem(name: "api_key", value: "8c5d03d43a4e14e8b80aafc5a1120f4b"), URLQueryItem(name: "format", value: "json"), URLQueryItem(name: "nojsoncallback", value: "1"), URLQueryItem(name: "nojsoncallback", value: "1")]
       
         return queryItem
     }
@@ -58,4 +58,4 @@ enum Method: String {
     case post
 }
 
-//https://www.flickr.com/services/rest/%3Fmethod=flickr.photos.getRecent?api_key=8c5d03d43a4e14e8b80aafc5a1120f4b&format=json&nojsoncallback=1
+
