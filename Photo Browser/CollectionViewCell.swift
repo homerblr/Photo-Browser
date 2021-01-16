@@ -9,40 +9,43 @@ import UIKit
 
 class CollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var image: UIImageView!
+    @IBOutlet weak var photoImage: UIImageView!
     static let cellID = "ImageCell"
     var directoryURL : URL?
-    var photoObject : Photo?
-    func setModel(photo: Photo) {
+    var photoObject : PhotoObject?
+    
+    func setModel(photo: PhotoObject) {
         photoObject = photo
+        searchSavedAndSetImage()
     }
     
-    @objc func onDidReceiveData(_ notification: Notification) {
-        guard let photo = photoObject else { fatalError("chto-to ne tak")}
+    
+    func searchSavedAndSetImage() {
+        //TO DO: Make a seperate class for saving and reading data
+        guard let photo = photoObject else { fatalError("Error while unwrapping PhotoObject")}
         if !FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).isEmpty {
-           directoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            directoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         }
         if let directoryURL = self.directoryURL {
             let fileURL = URL(fileURLWithPath: photo.id, relativeTo: directoryURL).appendingPathExtension("jpg")
-        do {
-        let savedImage = try Data(contentsOf: fileURL)
-            DispatchQueue.main.async {
-                self.image.image = UIImage(data: savedImage)
+            do {
+                let savedImage = try Data(contentsOf: fileURL)
+                DispatchQueue.main.async {
+                    self.photoImage.image = UIImage(data: savedImage)
+                }
+            } catch {
+                print("unable to read data")
+            } } else {
+                print("directory not found")
             }
-        } catch {
-            print("unable to read data")
-        } } else {
-            print("directory not found")
-        }
     }
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        NotificationCenter.default.addObserver(self, selector: #selector(onDidReceiveData(_:)), name: Notification.Name("download complete"), object: nil)
-        print("init")
     }
-    override class func awakeFromNib() {
-        super.awakeFromNib()
-        NotificationCenter.default.addObserver(self, selector: #selector(onDidReceiveData(_:)), name: Notification.Name("download complete"), object: nil)
-        
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.photoImage.image = nil
     }
 }
+

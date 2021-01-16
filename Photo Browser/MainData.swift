@@ -12,15 +12,15 @@ struct MainData: Codable {
     let stat: String
 }
 
-// MARK: - Photos
+
 struct Photos: Codable {
     let page, pages, perpage: Int
     let total: Int
-    let photo: [Photo]
+    let photo: [PhotoObject]
 }
 
-// MARK: - Photo
-struct Photo: Codable {
+
+struct PhotoObject: Codable {
     let id, owner, secret, server: String
     let farm: Int
     let title: String
@@ -28,11 +28,12 @@ struct Photo: Codable {
     
 }
 
-extension Photo {
-//    https://live.staticflickr.com/{server-id}/{id}_{secret}_{size-suffix}.jpg
+extension PhotoObject {
     var thumbURL: URL? {
         guard var urlComponents = URLComponents(string: "https://live.staticflickr.com") else { return nil }
         urlComponents.path = "/\(self.server)/\(self.id)_\(self.secret)_w.jpg"
         return urlComponents.url
+        
+    //TODO: Same thing with bigger images
     }
 }
