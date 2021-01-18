@@ -68,8 +68,8 @@
 			children = (
 				CB4788E225AF202F001A4D91 /* AppDelegate.swift */,
 				CB4788E425AF202F001A4D91 /* SceneDelegate.swift */,
-				CB4788E625AF202F001A4D91 /* MainScreenVC.swift */,
 				CB47890C25B1DE10001A4D91 /* PhotoDataSource.swift */,
+				CB4788E625AF202F001A4D91 /* MainScreenVC.swift */,
 				CB47890525B0C9BC001A4D91 /* CollectionViewCell.swift */,
 				CB4788F925AF22A1001A4D91 /* MainData.swift */,
 				CB4788FC25AF273A001A4D91 /* Networking.swift */,
