@@ -32,6 +32,8 @@ class CollectionViewCell: UICollectionViewCell {
                 let savedImage = try Data(contentsOf: fileURL)
                 DispatchQueue.main.async {
                     self.photoImage.image = UIImage(data: savedImage)
+                    self.photoImage.contentMode = .scaleAspectFill
+                    self.photoImage.layer.cornerRadius = 10
                 }
             } catch {
                 print("unable to read data")
