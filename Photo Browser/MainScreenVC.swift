@@ -12,13 +12,10 @@ class MainScreenVC: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     var photoModel : [PhotoObject] = []
     let photoDataSource = PhotoDataSource()
+    let segueID = "goToDetail"
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 120, height: 120)
-        
-        collectionView.dataSource = self
         photoDataSource.delegate = self
         photoDataSource.networkingAndSaving()
         collectionView.collectionViewLayout = createLayout()
@@ -35,8 +32,23 @@ extension MainScreenVC: UICollectionViewDelegate, UICollectionViewDataSource {
         cell.setModel(photo: photoModel[indexPath.row])
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        performSegue(withIdentifier: segueID, sender: indexPath)
+        collectionView.deselectItem(at: indexPath, animated: true)
+    }
+    //MARK: Segue
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == segueID {
+            guard let destinationVC = segue.destination as? DetailScreenVC else {return}
+            guard let row = (sender as? NSIndexPath)?.row else {return}
+            let model = photoModel[row]
+            destinationVC.selectedPhoto = model
+            destinationVC.photoModel = photoModel
+            
+        }
+    }
 }
-
 extension MainScreenVC: PhotosDelegate {
     func didFetchPhotos(_ photos: [PhotoObject]) {
         photoModel = photos

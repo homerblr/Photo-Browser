@@ -18,6 +18,8 @@
 		CB47890025AF27A6001A4D91 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4788FF25AF27A6001A4D91 /* API.swift */; };
 		CB47890625B0C9BD001A4D91 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB47890525B0C9BC001A4D91 /* CollectionViewCell.swift */; };
 		CB47890D25B1DE10001A4D91 /* PhotoDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB47890C25B1DE10001A4D91 /* PhotoDataSource.swift */; };
+		CB92A45525B6D23F00FB6B7E /* DetailScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB92A45425B6D23F00FB6B7E /* DetailScreenVC.swift */; };
+		CB92A45D25B8A5DA00FB6B7E /* DetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB92A45C25B8A5DA00FB6B7E /* DetailCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		CB4788FF25AF27A6001A4D91 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		CB47890525B0C9BC001A4D91 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		CB47890C25B1DE10001A4D91 /* PhotoDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDataSource.swift; sourceTree = "<group>"; };
+		CB92A45425B6D23F00FB6B7E /* DetailScreenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailScreenVC.swift; sourceTree = "<group>"; };
+		CB92A45C25B8A5DA00FB6B7E /* DetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,7 +74,9 @@
 				CB4788E425AF202F001A4D91 /* SceneDelegate.swift */,
 				CB47890C25B1DE10001A4D91 /* PhotoDataSource.swift */,
 				CB4788E625AF202F001A4D91 /* MainScreenVC.swift */,
+				CB92A45425B6D23F00FB6B7E /* DetailScreenVC.swift */,
 				CB47890525B0C9BC001A4D91 /* CollectionViewCell.swift */,
+				CB92A45C25B8A5DA00FB6B7E /* DetailCollectionViewCell.swift */,
 				CB4788F925AF22A1001A4D91 /* MainData.swift */,
 				CB4788FC25AF273A001A4D91 /* Networking.swift */,
 				CB4788FF25AF27A6001A4D91 /* API.swift */,
@@ -154,6 +160,8 @@
 			files = (
 				CB4788E725AF202F001A4D91 /* MainScreenVC.swift in Sources */,
 				CB4788FD25AF273A001A4D91 /* Networking.swift in Sources */,
+				CB92A45525B6D23F00FB6B7E /* DetailScreenVC.swift in Sources */,
+				CB92A45D25B8A5DA00FB6B7E /* DetailCollectionViewCell.swift in Sources */,
 				CB4788E325AF202F001A4D91 /* AppDelegate.swift in Sources */,
 				CB47890625B0C9BD001A4D91 /* CollectionViewCell.swift in Sources */,
 				CB4788E525AF202F001A4D91 /* SceneDelegate.swift in Sources */,

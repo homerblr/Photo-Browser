@@ -1,16 +1,17 @@
 //
-//  CollectionViewCell.swift
+//  DetailCollectionViewCell.swift
 //  Photo Browser
 //
-//  Created by Mikhail Kisly on 14.01.21.
+//  Created by Mikhail Kisly on 20.01.21.
 //
+
 
 import UIKit
 
-class CollectionViewCell: UICollectionViewCell {
+class DetailCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var photoImage: UIImageView!
-    static let cellID = "ImageCell"
+    @IBOutlet weak var detailPhotoImage: UIImageView!
+    static let cellID = "DetailCell"
     var directoryURL : URL?
     var photoObject : PhotoObject?
     
@@ -31,9 +32,9 @@ class CollectionViewCell: UICollectionViewCell {
             do {
                 let savedImage = try Data(contentsOf: fileURL)
                 DispatchQueue.main.async {
-                    self.photoImage.image = UIImage(data: savedImage)
-                    self.photoImage.contentMode = .scaleAspectFill
-                    self.photoImage.layer.cornerRadius = 10
+                    self.detailPhotoImage.image = UIImage(data: savedImage)
+                    self.detailPhotoImage.contentMode = .scaleAspectFit
+                    self.detailPhotoImage.layer.cornerRadius = 10
                 }
             } catch {
                 print("unable to read data")
@@ -48,7 +49,7 @@ class CollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.photoImage.image = nil
+        self.detailPhotoImage.image = nil
     }
     
     override init(frame: CGRect) {
