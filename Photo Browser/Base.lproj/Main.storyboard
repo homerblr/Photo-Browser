@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="wa8-ZK-XaD">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
@@ -47,7 +47,7 @@
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <connections>
-                                            <outlet property="photoImage" destination="CE8-bo-QRn" id="Oib-7N-WPf"/>
+                                            <outlet property="photoImage" destination="CE8-bo-QRn" id="9Ms-SU-vLL"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -66,11 +66,83 @@
                             <constraint firstAttribute="trailing" secondItem="a1w-Gc-Soe" secondAttribute="trailing" id="nsT-4l-cPD"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="zRf-9V-SNO"/>
                     <connections>
                         <outlet property="collectionView" destination="a1w-Gc-Soe" id="7id-LG-HDZ"/>
+                        <segue destination="81y-Uj-P3x" kind="show" identifier="goToDetail" id="wOG-wZ-k7b"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="695.6521739130435" y="75.669642857142847"/>
+        </scene>
+        <!--Detail ScreenVC-->
+        <scene sceneID="z5O-00-vWe">
+            <objects>
+                <collectionViewController id="81y-Uj-P3x" customClass="DetailScreenVC" customModule="Photo_Browser" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="b0Q-MG-gfj">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="qlR-Dp-aIC">
+                            <size key="itemSize" width="413" height="822"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DetailCell" id="IvL-B1-cSK" customClass="DetailCollectionViewCell" customModule="Photo_Browser" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="-24" width="413" height="822"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="nXE-xI-dGb">
+                                    <rect key="frame" x="0.0" y="0.0" width="413" height="822"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iSK-PO-AOv">
+                                            <rect key="frame" x="0.0" y="0.0" width="413" height="822"/>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="iSK-PO-AOv" firstAttribute="top" secondItem="nXE-xI-dGb" secondAttribute="top" id="81E-Lv-7B2"/>
+                                        <constraint firstItem="iSK-PO-AOv" firstAttribute="leading" secondItem="nXE-xI-dGb" secondAttribute="leading" id="Edn-gd-bkM"/>
+                                        <constraint firstAttribute="trailing" secondItem="iSK-PO-AOv" secondAttribute="trailing" id="fJn-LM-Rs0"/>
+                                        <constraint firstAttribute="bottom" secondItem="iSK-PO-AOv" secondAttribute="bottom" id="nTu-JX-tnS"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
+                                <connections>
+                                    <outlet property="detailPhotoImage" destination="iSK-PO-AOv" id="ioa-if-1fr"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="81y-Uj-P3x" id="HsJ-qg-wgr"/>
+                            <outlet property="delegate" destination="81y-Uj-P3x" id="A84-eC-KAp"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" id="YRf-hG-mi3"/>
+                    <connections>
+                        <outlet property="collectionView" destination="b0Q-MG-gfj" id="CQk-4f-wvN"/>
+                    </connections>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qPA-zV-us5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1626.0869565217392" y="75"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="FHH-qj-Vnz">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wa8-ZK-XaD" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="EIE-PW-mWk">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="SCj-7O-Cp3"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hEv-yU-Lhc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-214.49275362318843" y="75.669642857142847"/>
         </scene>
