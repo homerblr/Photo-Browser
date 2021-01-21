@@ -36,7 +36,7 @@ class DetailScreenVC: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailCollectionViewCell.cellID, for: indexPath) as! DetailCollectionViewCell
         cell.setModel(photo: photoModel[indexPath.row])
-        cell.setPhoto()
+        cell.updatePhoto()
       
         return cell
     }

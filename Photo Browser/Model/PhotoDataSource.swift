@@ -18,7 +18,7 @@ class PhotoDataSource {
     
     
     func networkingAndSaving() {
-        Networking.fetchData(PhotosAPITarget.photos, MainData.self, competionHandler: {
+        Networking.fetchData(PhotosAPITarget.photos, FetchPhotoResponse.self, competionHandler: {
             [weak self] result in
             guard let self = self else { return }
             switch result {

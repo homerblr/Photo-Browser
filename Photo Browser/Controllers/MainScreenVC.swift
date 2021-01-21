@@ -34,7 +34,7 @@ extension MainScreenVC: PhotosDelegate {
             let cell = self.collectionView.visibleCells
                 .compactMap{$0 as? CollectionViewCell}
                 .first(where: {$0.photoObject?.id == id})
-            cell?.setPhoto()
+            cell?.updatePhoto()
         }
     }
 }
@@ -47,7 +47,7 @@ extension MainScreenVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCell.cellID, for: indexPath) as! CollectionViewCell
         cell.setModel(photo: photoModel[indexPath.row])
-        cell.setPhoto()
+        cell.updatePhoto()
         return cell
     }
     

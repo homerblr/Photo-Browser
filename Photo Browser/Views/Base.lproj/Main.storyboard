@@ -47,7 +47,7 @@
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <connections>
-                                            <outlet property="photoImage" destination="CE8-bo-QRn" id="9Ms-SU-vLL"/>
+                                            <outlet property="photoImageView" destination="CE8-bo-QRn" id="9Ms-SU-vLL"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -110,7 +110,7 @@
                                     </constraints>
                                 </collectionViewCellContentView>
                                 <connections>
-                                    <outlet property="detailPhotoImage" destination="iSK-PO-AOv" id="ioa-if-1fr"/>
+                                    <outlet property="detailPhotoImageView" destination="iSK-PO-AOv" id="ioa-if-1fr"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>

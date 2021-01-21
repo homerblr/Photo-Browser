@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MainData: Codable {
+struct FetchPhotoResponse: Codable {
     let photos: Photos
     let stat: String
 }
