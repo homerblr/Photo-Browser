@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Main ScreenVC-->
+        <!--Photo Browser-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="MainScreenVC" customModule="Photo_Browser" customModuleProvider="target" sceneMemberID="viewController">
@@ -66,7 +66,7 @@
                             <constraint firstAttribute="trailing" secondItem="a1w-Gc-Soe" secondAttribute="trailing" id="nsT-4l-cPD"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="zRf-9V-SNO"/>
+                    <navigationItem key="navigationItem" title="Photo Browser" id="zRf-9V-SNO"/>
                     <connections>
                         <outlet property="collectionView" destination="a1w-Gc-Soe" id="7id-LG-HDZ"/>
                         <segue destination="81y-Uj-P3x" kind="show" identifier="goToDetail" id="wOG-wZ-k7b"/>
@@ -84,7 +84,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="qlR-Dp-aIC">
+                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="5" minimumInteritemSpacing="5" id="qlR-Dp-aIC">
                             <size key="itemSize" width="413" height="822"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>

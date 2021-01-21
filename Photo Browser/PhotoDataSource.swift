@@ -14,12 +14,10 @@ protocol PhotosDelegate: class  {
 
 class PhotoDataSource {
     weak var delegate: PhotosDelegate?
-    var directoryURL : URL? = nil
+    var photoDataService = PhotoDataService()
+    
     
     func networkingAndSaving() {
-        if !FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).isEmpty {
-            directoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        }
         Networking.fetchData(PhotosAPITarget.photos, MainData.self, competionHandler: {
             [weak self] result in
             guard let self = self else { return }
@@ -34,17 +32,8 @@ class PhotoDataSource {
                             guard let self = self else { return }
                             switch result {
                             case .success(let actualPhoto):
-                                do {
-                                    if let directoryURL = self.directoryURL {
-                                        let fileURL = URL(fileURLWithPath: photo.id, relativeTo: directoryURL).appendingPathExtension("jpg")
-                                        do {
-                                            try actualPhoto.write(to: fileURL)
-                                            self.delegate?.didDownloadPhotoWithID(photo.id)
-                                        } catch {
-                                            print(error.localizedDescription)
-                                        }
-                                    }
-                                }
+                                self.photoDataService.savePhoto(photoID: photo.id, data: actualPhoto)
+                                self.delegate?.didDownloadPhotoWithID(photo.id)
                             case .failure(let err):
                                 print("Error downloading photo: \(err)")
                             }
