@@ -21,13 +21,13 @@ class MainScreenVC: UIViewController {
         collectionView.collectionViewLayout = createLayout()
     }
 }
+//MARK: Delegate's methods
 extension MainScreenVC: PhotosDelegate {
     func didFetchPhotos(_ photos: [PhotoObject]) {
         photoModel = photos
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
-        
     }
     func didDownloadPhotoWithID(_ id: String) {
         DispatchQueue.main.async {
@@ -35,7 +35,6 @@ extension MainScreenVC: PhotosDelegate {
                 .compactMap{$0 as? CollectionViewCell}
                 .first(where: {$0.photoObject?.id == id})
             cell?.setPhoto()
-            
         }
     }
 }

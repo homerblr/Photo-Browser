@@ -33,7 +33,5 @@ extension PhotoObject {
         guard var urlComponents = URLComponents(string: "https://live.staticflickr.com") else { return nil }
         urlComponents.path = "/\(self.server)/\(self.id)_\(self.secret)_w.jpg"
         return urlComponents.url
-        
-    //TODO: Same thing with bigger images
     }
 }
