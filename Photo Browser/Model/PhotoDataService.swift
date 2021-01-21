@@ -9,7 +9,14 @@ import UIKit
 
 class PhotoDataService {
     
-    var directoryURL : URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    
+    var directoryURL : URL?
+    init() {
+        if !FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).isEmpty {
+            self.directoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        }
+      
+    }
     
     func readSavedPhoto(photoID: String) -> Data? {
         var data : Data?
@@ -22,7 +29,7 @@ class PhotoDataService {
         return data
     }
     
-    func savePhoto(photoID : String, data : Data) {
+    func savePhoto(photoID: String, data: Data) {
             let fileURL = URL(fileURLWithPath: photoID, relativeTo: directoryURL).appendingPathExtension("jpg")
             do {
                 try data.write(to: fileURL)
@@ -31,3 +38,5 @@ class PhotoDataService {
             }
     }
 }
+
+

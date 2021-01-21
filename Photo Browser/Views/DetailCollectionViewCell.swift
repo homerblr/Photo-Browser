@@ -10,7 +10,7 @@ import UIKit
 
 class DetailCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var detailPhotoImage: UIImageView!
+    @IBOutlet weak var detailPhotoImageView: UIImageView!
     static let cellID = "DetailCell"
     var photoObject : PhotoObject?
     var photoDataService = PhotoDataService()
@@ -19,13 +19,13 @@ class DetailCollectionViewCell: UICollectionViewCell {
         photoObject = photo
     }
     
-    func setPhoto() {
+    func updatePhoto() {
         guard let photoID = photoObject?.id else {return}
         if let photoData = photoDataService.readSavedPhoto(photoID: photoID) {
             DispatchQueue.main.async {
-                self.detailPhotoImage.image = UIImage(data: photoData)
-                self.detailPhotoImage.contentMode = .scaleAspectFit
-                self.detailPhotoImage.layer.cornerRadius = 10
+                self.detailPhotoImageView.image = UIImage(data: photoData)
+                self.detailPhotoImageView.contentMode = .scaleAspectFit
+                self.detailPhotoImageView.layer.cornerRadius = 10
             }
         }
     }
@@ -37,7 +37,7 @@ class DetailCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.detailPhotoImage.image = nil
+        self.detailPhotoImageView.image = nil
     }
     
     override init(frame: CGRect) {

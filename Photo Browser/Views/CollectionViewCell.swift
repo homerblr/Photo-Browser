@@ -9,7 +9,7 @@ import UIKit
 
 class CollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var photoImage: UIImageView!
+    @IBOutlet weak var photoImageView: UIImageView!
     static let cellID = "ImageCell"
     var photoObject : PhotoObject?
     var photoDataService = PhotoDataService()
@@ -18,13 +18,13 @@ class CollectionViewCell: UICollectionViewCell {
         photoObject = photo
         
     }
-    func setPhoto() {
+    func updatePhoto() {
         guard let photoID = photoObject?.id else {return}
         if let photoData = photoDataService.readSavedPhoto(photoID: photoID) {
             DispatchQueue.main.async {
-                self.photoImage.image = UIImage(data: photoData)
-                self.photoImage.contentMode = .scaleAspectFill
-                self.photoImage.layer.cornerRadius = 10
+                self.photoImageView.image = UIImage(data: photoData)
+                self.photoImageView.contentMode = .scaleAspectFill
+                self.photoImageView.layer.cornerRadius = 10
             }
         }
     }
@@ -36,7 +36,7 @@ class CollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.photoImage.image = nil
+        self.photoImageView.image = nil
     }
     
     override init(frame: CGRect) {
