@@ -46,7 +46,7 @@ extension PhotosAPITarget: APITarget {
     }
     
     var queryItems: [URLQueryItem]? {
-        var queryItem : [URLQueryItem] = [URLQueryItem(name: "method", value: "flickr.photos.getRecent"), URLQueryItem(name: "api_key", value: "8c5d03d43a4e14e8b80aafc5a1120f4b"), URLQueryItem(name: "format", value: "json"), URLQueryItem(name: "nojsoncallback", value: "1"), URLQueryItem(name: "nojsoncallback", value: "1")]
+        let queryItem : [URLQueryItem] = [URLQueryItem(name: "method", value: "flickr.photos.getRecent"), URLQueryItem(name: "api_key", value: "8c5d03d43a4e14e8b80aafc5a1120f4b"), URLQueryItem(name: "format", value: "json"), URLQueryItem(name: "nojsoncallback", value: "1"), URLQueryItem(name: "nojsoncallback", value: "1")]
       
         return queryItem
     }

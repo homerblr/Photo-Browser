@@ -17,7 +17,7 @@ class PhotoDataService {
             do {
                 data = try Data(contentsOf: fileURL)
             } catch {
-                print("Can't load photo from disk, \(error.localizedDescription)")
+               
             }
         return data
     }

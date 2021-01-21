@@ -22,6 +22,7 @@ class DetailScreenVC: UICollectionViewController {
             guard let index = photoModel
                     .firstIndex(where: {$0.id == selectedPhoto.id}) else {return}
             collectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: true)
+            collectionView.isPagingEnabled = true
         }
    
     }
@@ -36,12 +37,15 @@ class DetailScreenVC: UICollectionViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailCollectionViewCell.cellID, for: indexPath) as! DetailCollectionViewCell
         cell.setModel(photo: photoModel[indexPath.row])
         cell.setPhoto()
+      
         return cell
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let cvRect = collectionView.frame
-        return CGSize(width: cvRect.width, height: cvRect.height)
-    }
 
+}
+
+extension DetailScreenVC: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let frameSize = collectionView.frame.size
+        return CGSize(width: frameSize.width, height: frameSize.height)
+}
 }

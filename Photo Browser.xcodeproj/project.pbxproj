@@ -53,6 +53,44 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CB430DD425B9AB2300D6F243 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				CB4788E625AF202F001A4D91 /* MainScreenVC.swift */,
+				CB92A45425B6D23F00FB6B7E /* DetailScreenVC.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		CB430DD625B9AB3C00D6F243 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CB4788E825AF202F001A4D91 /* Main.storyboard */,
+				CB47890525B0C9BC001A4D91 /* CollectionViewCell.swift */,
+				CB92A45C25B8A5DA00FB6B7E /* DetailCollectionViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		CB430DD825B9AB4900D6F243 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				CB4788FC25AF273A001A4D91 /* Networking.swift */,
+				CB4788FF25AF27A6001A4D91 /* API.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		CB430DDA25B9AB7000D6F243 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CB47890C25B1DE10001A4D91 /* PhotoDataSource.swift */,
+				CB92A46725B98C6800FB6B7E /* PhotoDataService.swift */,
+				CB4788F925AF22A1001A4D91 /* MainData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		CB4788D625AF202F001A4D91 = {
 			isa = PBXGroup;
 			children = (
@@ -74,16 +112,10 @@
 			children = (
 				CB4788E225AF202F001A4D91 /* AppDelegate.swift */,
 				CB4788E425AF202F001A4D91 /* SceneDelegate.swift */,
-				CB47890C25B1DE10001A4D91 /* PhotoDataSource.swift */,
-				CB4788E625AF202F001A4D91 /* MainScreenVC.swift */,
-				CB92A45425B6D23F00FB6B7E /* DetailScreenVC.swift */,
-				CB47890525B0C9BC001A4D91 /* CollectionViewCell.swift */,
-				CB92A45C25B8A5DA00FB6B7E /* DetailCollectionViewCell.swift */,
-				CB4788F925AF22A1001A4D91 /* MainData.swift */,
-				CB4788FC25AF273A001A4D91 /* Networking.swift */,
-				CB92A46725B98C6800FB6B7E /* PhotoDataService.swift */,
-				CB4788FF25AF27A6001A4D91 /* API.swift */,
-				CB4788E825AF202F001A4D91 /* Main.storyboard */,
+				CB430DD425B9AB2300D6F243 /* Controllers */,
+				CB430DD625B9AB3C00D6F243 /* Views */,
+				CB430DDA25B9AB7000D6F243 /* Model */,
+				CB430DD825B9AB4900D6F243 /* Networking */,
 				CB4788EB25AF2031001A4D91 /* Assets.xcassets */,
 				CB4788ED25AF2031001A4D91 /* LaunchScreen.storyboard */,
 				CB4788F025AF2031001A4D91 /* Info.plist */,
