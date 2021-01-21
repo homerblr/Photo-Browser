@@ -12,36 +12,24 @@ class DetailCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var detailPhotoImage: UIImageView!
     static let cellID = "DetailCell"
-    var directoryURL : URL?
     var photoObject : PhotoObject?
+    var photoDataService = PhotoDataService()
     
     func setModel(photo: PhotoObject) {
         photoObject = photo
-        searchSavedAndSetImage()
     }
     
-    
-    func searchSavedAndSetImage() {
-        //TO DO: Make a seperate class for saving and reading data
-        guard let photo = photoObject else { fatalError("Error while unwrapping PhotoObject")}
-        if !FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).isEmpty {
-            directoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        }
-        if let directoryURL = self.directoryURL {
-            let fileURL = URL(fileURLWithPath: photo.id, relativeTo: directoryURL).appendingPathExtension("jpg")
-            do {
-                let savedImage = try Data(contentsOf: fileURL)
-                DispatchQueue.main.async {
-                    self.detailPhotoImage.image = UIImage(data: savedImage)
-                    self.detailPhotoImage.contentMode = .scaleAspectFit
-                    self.detailPhotoImage.layer.cornerRadius = 10
-                }
-            } catch {
-                print("unable to read data")
-            } } else {
-                print("directory not found")
+    func setPhoto() {
+        guard let photoID = photoObject?.id else {return}
+        if let photoData = photoDataService.readSavedPhoto(photoID: photoID) {
+            DispatchQueue.main.async {
+                self.detailPhotoImage.image = UIImage(data: photoData)
+                self.detailPhotoImage.contentMode = .scaleAspectFit
+                self.detailPhotoImage.layer.cornerRadius = 10
             }
+        }
     }
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         

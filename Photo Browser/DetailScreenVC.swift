@@ -19,14 +19,13 @@ class DetailScreenVC: UICollectionViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let selectedPhoto = selectedPhoto {
-            guard let index = photoModel.firstIndex(where: {$0.id == selectedPhoto.id}) else {return}
+            guard let index = photoModel
+                    .firstIndex(where: {$0.id == selectedPhoto.id}) else {return}
             collectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: true)
         }
    
     }
     
- 
-
     // MARK: UICollectionViewDataSource
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -35,17 +34,14 @@ class DetailScreenVC: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailCollectionViewCell.cellID, for: indexPath) as! DetailCollectionViewCell
-        
         cell.setModel(photo: photoModel[indexPath.row])
-      
+        cell.setPhoto()
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let cellsAcross: CGFloat = 3
-        let spaceBetweenCells: CGFloat = 1
-        let dim = (collectionView.bounds.width - (cellsAcross - 1) * spaceBetweenCells) / cellsAcross
-        return CGSize(width: dim, height: dim)
+        let cvRect = collectionView.frame
+        return CGSize(width: cvRect.width, height: cvRect.height)
     }
 
 }
