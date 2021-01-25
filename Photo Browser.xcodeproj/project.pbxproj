@@ -24,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CB030DF925BF485100964D3C /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		CB4788DF25AF202F001A4D91 /* Photo Browser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Photo Browser.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB4788E225AF202F001A4D91 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CB4788E425AF202F001A4D91 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -119,6 +120,7 @@
 				CB4788EB25AF2031001A4D91 /* Assets.xcassets */,
 				CB4788ED25AF2031001A4D91 /* LaunchScreen.storyboard */,
 				CB4788F025AF2031001A4D91 /* Info.plist */,
+				CB030DF925BF485100964D3C /* Config.xcconfig */,
 			);
 			path = "Photo Browser";
 			sourceTree = "<group>";
