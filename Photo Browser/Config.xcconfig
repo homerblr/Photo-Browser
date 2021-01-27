@@ -1,0 +1,14 @@
+//
+//  Config.xcconfig
+//  Photo Browser
+//
+//  Created by Mikhail Kisly on 25.01.21.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+
+API_KEY = 8c5d03d43a4e14e8b80aafc5a1120f4b
+HOST = www.flickr.com
+PATH = /services/rest/

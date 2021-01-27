@@ -21,11 +21,11 @@ class DetailCollectionViewCell: UICollectionViewCell {
     
     func updatePhoto() {
         guard let photoID = photoObject?.id else {return}
-        if let photoData = photoDataService.readSavedPhoto(photoID: photoID) {
+        if let photoData = photoDataService.readSavedPhoto(photoID: photoID, imageFormat: .jpg) {
             DispatchQueue.main.async {
                 self.detailPhotoImageView.image = UIImage(data: photoData)
                 self.detailPhotoImageView.contentMode = .scaleAspectFit
-                self.detailPhotoImageView.layer.cornerRadius = 10
+
             }
         }
     }

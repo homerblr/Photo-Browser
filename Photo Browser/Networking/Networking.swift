@@ -10,7 +10,6 @@ import Foundation
 struct Networking {
     
     static func fetchData<T>(_ request: APITarget, _ modelType: T.Type, competionHandler: @escaping (Result <T, Error>) -> Void) where T : Codable {
-  
         var urlComponents = URLComponents()
         urlComponents.scheme = request.scheme
         urlComponents.host = request.host
@@ -18,9 +17,21 @@ struct Networking {
         urlComponents.queryItems = request.queryItems
         guard let stringURL = urlComponents.url?.absoluteString, let url = URL(string: stringURL) else {return}
         let session = URLSession.shared
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = request.method.rawValue
         session.dataTask(with: url) { (data, response, error)
             in
-            guard let data = data, let response = response else {return}
+            guard let data = data, let response = response else {
+                let error = NSError(domain: "photo.download", code: -1, userInfo:["Reason": "Photo data is empty"])
+                competionHandler(.failure(error))
+                return
+            }
+          
+            if data.isEmpty {
+                let error = NSError(domain: "json.download", code: -1, userInfo:["Reason": "Json data is empty"])
+                competionHandler(.failure(error))
+                return
+            }
             do {
                 let jsonData = try JSONDecoder().decode(T.self, from: data)
                 competionHandler(.success(jsonData))
@@ -40,7 +51,11 @@ struct Networking {
                 return
             }
             //TODO: HTTPURLResponse
-            guard let data = data, let response = response else {return}
+            guard let data = data, let response = response else {
+                let error = NSError(domain: "photo.download", code: -1, userInfo:["Reason": "Network failure during downloadPhoto method"])
+                competionHandler(.failure(error))
+                return
+            }
             if data.isEmpty {
                 let error = NSError(domain: "photo.download", code: -1, userInfo:["Reason": "Photo data is empty"])
                 competionHandler(.failure(error))

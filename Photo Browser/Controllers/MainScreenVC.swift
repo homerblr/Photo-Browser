@@ -19,6 +19,7 @@ class MainScreenVC: UIViewController {
         photoDataSource.delegate = self
         photoDataSource.networkingAndSaving()
         collectionView.collectionViewLayout = createLayout()
+        print(ConfigRepository.getAPIKey()!)
     }
 }
 //MARK: Delegate's methods
@@ -48,6 +49,8 @@ extension MainScreenVC: UICollectionViewDelegate, UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCell.cellID, for: indexPath) as! CollectionViewCell
         cell.setModel(photo: photoModel[indexPath.row])
         cell.updatePhoto()
+        //race condition у комплишна
+        //загрузка по 10 фотографий при скролле по индексу
         return cell
     }
     
