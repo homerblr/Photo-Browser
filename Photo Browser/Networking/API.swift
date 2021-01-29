@@ -6,13 +6,6 @@
 //
 
 import Foundation
-//вынести в xconfig
-
-struct AppConfiguration {
-    var baseURL : URL? {
-        return URL(string: "https://flickr.com/services/rest/")
-    }
-}
 
 protocol APITarget {
     var path : String {get}
@@ -24,9 +17,7 @@ protocol APITarget {
 
 extension APITarget {
     var host : String {
-        if let host = ConfigRepository.getHost() {
-            return host
-        }
+        return ConfigRepository.getHost() ?? "No host at ConfigRepo()"
     }
 
     var scheme : String? {
@@ -42,9 +33,7 @@ extension PhotosAPITarget: APITarget {
     var path: String {
         switch self {
         case .photos:
-            if let path = ConfigRepository.getPath() {
-                return path
-            }
+            return ConfigRepository.getPath() ?? "No path at ConfigRepo"
         }
        
     }

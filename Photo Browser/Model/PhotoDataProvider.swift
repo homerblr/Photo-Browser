@@ -7,42 +7,56 @@
 
 import Foundation
 
+protocol PhotoDataProviderProtocol {
+    func photo(byID id : String, completion: @escaping (Result<Data?, Error>) -> Void)
+    func fetchPhotos(_ completion: @escaping (Result<[PhotoObject], Error>) -> Void)
+    var photoModel : [PhotoObject] {get set}
+}
 
 class PhotoDataProvider : PhotoDataProviderProtocol {
-    var loader: PhotoDataSourceProtocol
-    var cache: PhotoDataCacheProtocol
     
+    enum ImageFormat : String {
+        case jpg, png
+    }
     
-    func fetchPhotos(_ completion: Result<[PhotoObject], Error>) {
-        loader.fetchPhotos { (result) in
+    private var loader: PhotoDataSourceProtocol
+    private var cache: PhotoDataCacheProtocol
+    var photoModel: [PhotoObject]
+    var photoObjectArray = [PhotoRepresentable]()
+    
+    func fetchPhotos(_ completion: @escaping (Result<[PhotoObject], Error>) -> Void) {
+        loader.fetchPhotoList { [weak self] (result) in
             switch result {
             case .success(let photoObject):
-                photoObject.enumerated()
-                .forEach({ [weak self] index, photo in
-                    guard let self = self else {return}
-                    self.loader.downloadPhoto(photoObject: photo) {
-                        (result) in
-                        switch result {
-                        case .success(let actualPhoto):
-                            print(actualPhoto)
-                        case .failure(let error):
-                            print(error)
-                        }
-                    }
-                })
+                self?.photoObjectArray = photoObject
+                completion(.success(photoObject))
             case .failure(let error):
+                completion(.failure(error))
                 print(error.localizedDescription)
             }
         }
     }
     
-    func photo(byID id: String, completion: Result<Data?, Error>) {
-        
+    func photo(byID id : String, completion: @escaping (Result<Data?, Error>) -> Void) {
+        //Read photo by ID from cache if it exists
+        cache.readPhoto(withID: id, imageFormat: .jpg) { (result) in
+            switch result {
+            case .success(let photoData):
+                completion(.success(photoData))
+            case .failure(let _):
+                //If photo doesn't exist, download it by it's ID
+                guard let photoObject = photoObjectArray.first(where: {$0.id == id}) else {
+                    let error = NSError(domain: "photoDataProvider.photo", code: -1, userInfo:["Reason": "Can't read photo"])
+                    completion(.failure(error))
+                    return
+                }
+                loader.downloadPhoto(photo: photoObject, completion: completion)
+            }
+        }
     }
-    
-    private init() {
-        self.loader = PhotoDataSource()
-        self.cache = PhotoDataCache()
+    init(loader: PhotoDataSource, cache: PhotoDataCache, photoModel: [PhotoObject]) {
+        self.loader = loader
+        self.cache = cache
+        self.photoModel = photoModel
     }
-    
 }

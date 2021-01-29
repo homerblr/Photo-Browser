@@ -11,34 +11,29 @@ class MainScreenVC: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     var photoModel : [PhotoObject] = []
-    let photoDataSource = PhotoDataSource()
     let segueID = "goToDetail"
+    lazy var photoProvider: PhotoDataProviderProtocol = PhotoDataProvider(loader: PhotoDataSource(), cache: PhotoDataCache(), photoModel: photoModel)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        photoDataSource.delegate = self
-        photoDataSource.networkingAndSaving()
         collectionView.collectionViewLayout = createLayout()
-        print(ConfigRepository.getAPIKey()!)
+        photoProvider.fetchPhotos {
+            [weak self] (result) in
+            guard let self = self else { return }
+            switch result {
+            case .success(let model):
+                self.photoModel = model
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
     }
 }
-//MARK: Delegate's methods
-extension MainScreenVC: PhotosDelegate {
-    func didFetchPhotos(_ photos: [PhotoObject]) {
-        photoModel = photos
-        DispatchQueue.main.async {
-            self.collectionView.reloadData()
-        }
-    }
-    func didDownloadPhotoWithID(_ id: String) {
-        DispatchQueue.main.async {
-            let cell = self.collectionView.visibleCells
-                .compactMap{$0 as? CollectionViewCell}
-                .first(where: {$0.photoObject?.id == id})
-            cell?.updatePhoto()
-        }
-    }
-}
+
 //MARK: Delegate and Datasource
 extension MainScreenVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -47,9 +42,25 @@ extension MainScreenVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCell.cellID, for: indexPath) as! CollectionViewCell
-        cell.setModel(photo: photoModel[indexPath.row])
-        cell.updatePhoto()
-        //race condition у комплишна
+        cell.photoID = photoModel[indexPath.row].id
+        let photoID = photoModel[indexPath.row].id
+        DispatchQueue.main.async {
+            cell.photoImageView.image = nil
+        }
+        photoProvider.photo(byID: photoID) {  [photoID] (result) in
+            switch result {
+            case .success(let photoData):
+                guard let photoData = photoData else {return}
+                    if photoID == cell.photoID {
+                        DispatchQueue.main.async {
+                            cell.photoImageView.image = UIImage(data: photoData)
+                        }
+                    }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        cell.updateImageView()
         //загрузка по 10 фотографий при скролле по индексу
         return cell
     }
@@ -63,13 +74,13 @@ extension MainScreenVC: UICollectionViewDelegate, UICollectionViewDataSource {
         if segue.identifier == segueID {
             guard let destinationVC = segue.destination as? DetailScreenVC else {return}
             guard let row = (sender as? NSIndexPath)?.row else {return}
-            let model = photoModel[row]
-            destinationVC.selectedPhoto = model
-            destinationVC.photoModel = photoModel
+            let selectedPhotoID = photoModel[row].id
+            destinationVC.selectedPhotoID = selectedPhotoID
+            photoProvider.photoModel = photoModel
+            destinationVC.photoDataProvider = photoProvider as? PhotoDataProvider
         }
     }
 }
-
 
 //MARK: Layout
 extension MainScreenVC {

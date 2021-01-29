@@ -7,37 +7,14 @@
 
 import Foundation
 
-
-protocol PhotoDataProviderProtocol {
-    //Передать через свойства класса, приватные поля
-    var loader: PhotoDataSourceProtocol {get}
-    var cache: PhotoDataCacheProtocol {get}
-    func photo(byID id : String, completion: Result<Data?, Error>)
-    func fetchPhotos(_ completion: Result<[PhotoObject], Error>)
-    //добавить fetchPhotos
-}
-
-protocol PhotoDataCacheProtocol {
-    func photo(byID id : String, completion: Result<Data?, Error>)
-    func save(photoByID id: String, completion: Result<Data?, Error>)
-}
-
 protocol PhotoDataSourceProtocol {
-    func fetchPhotos(_ completion: @escaping (Result<[PhotoObject], Error>) -> Void)
-    func downloadPhoto(photoObject: PhotoObject, completion: @escaping (Result<Data?, Error>) -> Void)
-}
-
-
-
-protocol PhotosDelegate: class  {
-    //избавляюсь
-    func didFetchPhotos(_ photos: [PhotoObject])
-    func didDownloadPhotoWithID(_ id: String)
+    func fetchPhotoList(_ completion: @escaping (Result<[PhotoObject], Error>) -> Void)
+    func downloadPhoto(photo: PhotoRepresentable, completion: @escaping (Result<Data?, Error>) -> Void)
 }
 
 class PhotoDataSource: PhotoDataSourceProtocol {
 
-    func fetchPhotos(_ completion: @escaping (Result<[PhotoObject], Error>) -> Void) {
+    func fetchPhotoList(_ completion: @escaping (Result<[PhotoObject], Error>) -> Void) {
         Networking.fetchData(PhotosAPITarget.photos, FetchPhotoResponse.self, competionHandler: {
                         result in
                         switch result {
@@ -49,8 +26,12 @@ class PhotoDataSource: PhotoDataSourceProtocol {
                         print(err.localizedDescription)}})
     }
 
-    func downloadPhoto(photoObject: PhotoObject, completion: @escaping (Result<Data?, Error>) -> Void) {
-                        guard let url = photoObject.thumbURL else { return }
+    func downloadPhoto(photo: PhotoRepresentable, completion: @escaping (Result<Data?, Error>) -> Void) {
+                            guard let url = photo.thumbURL else {
+                                let error = NSError(domain: "PhotoDataSource.downloadPhoto", code: -1, userInfo:["Reason": "URL is nil"])
+                                completion(.failure(error))
+                                return
+                            }
                         Networking.downloadPhoto(url: url, competionHandler: {
                             result in
                             switch result {
@@ -61,8 +42,4 @@ class PhotoDataSource: PhotoDataSourceProtocol {
                             completion(.failure(error))
                             print("Error downloading photo: \(err)")}})
     }
-                        
 }
-    
-    
-

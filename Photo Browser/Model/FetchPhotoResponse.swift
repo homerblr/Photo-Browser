@@ -52,9 +52,17 @@ struct PhotoObject: Codable {
     
 }
 
-extension PhotoObject {
+
+protocol PhotoRepresentable {
+    var id : String {get}
+    var secret : String {get}
+    var server : String {get}
+    var thumbURL : URL? {get}
+}
+
+extension PhotoObject: PhotoRepresentable {
     var thumbURL: URL? {
-        guard var urlComponents = URLComponents(string: "https://live.staticflickr.com") else { return nil }
+        guard var urlComponents = URLComponents(string: "https://live.staticflickr.com") else {return nil}
         urlComponents.path = "/\(self.server)/\(self.id)_\(self.secret)_w.jpg"
         return urlComponents.url
     }

@@ -50,7 +50,7 @@ struct Networking {
                 competionHandler(.failure(error))
                 return
             }
-            //TODO: HTTPURLResponse
+   
             guard let data = data, let response = response else {
                 let error = NSError(domain: "photo.download", code: -1, userInfo:["Reason": "Network failure during downloadPhoto method"])
                 competionHandler(.failure(error))
