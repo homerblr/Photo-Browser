@@ -12,7 +12,6 @@ struct FetchPhotoResponse: Codable {
     let stat: String
 }
 
-
 struct Photos: Codable {
     let page, pages, perpage: Int
     let total: Int

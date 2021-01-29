@@ -26,7 +26,6 @@ class PhotoDataCache: PhotoDataCacheProtocol
             do {
                try FileManager.default.createDirectory(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].path, withIntermediateDirectories: true, attributes: nil)
                 self.directoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-                //собственная директория в .documentDirectory
             }
             catch {
                 print(error.localizedDescription)

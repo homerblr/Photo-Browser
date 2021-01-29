@@ -30,7 +30,6 @@ class MainScreenVC: UIViewController {
                 print(error.localizedDescription)
             }
         }
-        
     }
 }
 
@@ -61,7 +60,6 @@ extension MainScreenVC: UICollectionViewDelegate, UICollectionViewDataSource {
             }
         }
         cell.updateImageView()
-        //загрузка по 10 фотографий при скролле по индексу
         return cell
     }
     

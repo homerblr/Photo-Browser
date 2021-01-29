@@ -52,6 +52,8 @@ class DetailScreenVC: UICollectionViewController {
         return cell
     }
 }
+
+//MARK: Layout
 extension DetailScreenVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let frameSize = collectionView.frame.size
