@@ -14,7 +14,7 @@ class DetailCollectionViewCell: UICollectionViewCell {
     static let cellID = "DetailCell"
     var photoID : String?
     
-    func updateImageView() {
+    func updateImageViewLayer() {
         DispatchQueue.main.async {
             self.detailPhotoImageView.contentMode = .scaleAspectFit
         }

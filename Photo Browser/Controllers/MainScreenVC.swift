@@ -21,8 +21,8 @@ class MainScreenVC: UIViewController {
             [weak self] (result) in
             guard let self = self else { return }
             switch result {
-            case .success(let model):
-                self.photoModel = model
+            case .success(let listOfPhotos):
+                self.photoModel = listOfPhotos
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
                 }
@@ -59,7 +59,7 @@ extension MainScreenVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 print(error.localizedDescription)
             }
         }
-        cell.updateImageView()
+        cell.updateImageViewLayer()
         return cell
     }
     
@@ -83,7 +83,6 @@ extension MainScreenVC: UICollectionViewDelegate, UICollectionViewDataSource {
 //MARK: Layout
 extension MainScreenVC {
     func createLayout() -> UICollectionViewLayout {
-        
         let leadingItem = NSCollectionLayoutItem(
             layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5),
                                                heightDimension: .fractionalHeight(1.0)))
