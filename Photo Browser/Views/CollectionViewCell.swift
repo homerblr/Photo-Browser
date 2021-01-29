@@ -18,7 +18,6 @@ class CollectionViewCell: UICollectionViewCell {
                 self.photoImageView.layer.cornerRadius = 10
             }
         }
-    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         

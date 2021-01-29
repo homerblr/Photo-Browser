@@ -30,7 +30,6 @@ class MainScreenVC: UIViewController {
                 print(error.localizedDescription)
             }
         }
-        
     }
 }
 
