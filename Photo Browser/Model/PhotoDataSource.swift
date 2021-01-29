@@ -7,44 +7,39 @@
 
 import Foundation
 
-protocol PhotosDelegate: class  {
-    func didFetchPhotos(_ photos: [PhotoObject])
-    func didDownloadPhotoWithID(_ id: String)
+protocol PhotoDataSourceProtocol {
+    func fetchPhotoList(_ completion: @escaping (Result<[PhotoObject], Error>) -> Void)
+    func downloadPhoto(photo: PhotoRepresentable, completion: @escaping (Result<Data?, Error>) -> Void)
 }
 
-class PhotoDataSource {
-    weak var delegate: PhotosDelegate?
-    var photoDataService = PhotoDataService()
-    
-    
-    func networkingAndSaving() {
+class PhotoDataSource: PhotoDataSourceProtocol {
+
+    func fetchPhotoList(_ completion: @escaping (Result<[PhotoObject], Error>) -> Void) {
         Networking.fetchData(PhotosAPITarget.photos, FetchPhotoResponse.self, competionHandler: {
-            [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let jsonData):
-                self.delegate?.didFetchPhotos(jsonData.photos.photo)
-                jsonData.photos.photo.enumerated()
-                    .forEach { index, photo in
-                        guard let url = photo.thumbURL else { return }
+                        result in
+                        switch result {
+                        case .success(let jsonData):
+                        completion(.success(jsonData.photos.photo))
+                        case .failure(let err):
+                        let error = NSError(domain: "json.download", code: -1, userInfo:["Reason": "Unable to download photo at fetchPhotos method"])
+                            completion(.failure(error))
+                        print(err.localizedDescription)}})
+    }
+
+    func downloadPhoto(photo: PhotoRepresentable, completion: @escaping (Result<Data?, Error>) -> Void) {
+                            guard let url = photo.thumbURL else {
+                                let error = NSError(domain: "PhotoDataSource.downloadPhoto", code: -1, userInfo:["Reason": "URL is nil"])
+                                completion(.failure(error))
+                                return
+                            }
                         Networking.downloadPhoto(url: url, competionHandler: {
-                            [weak self] result in
-                            guard let self = self else { return }
+                            result in
                             switch result {
                             case .success(let actualPhoto):
-                                self.photoDataService.savePhoto(photoID: photo.id, data: actualPhoto)
-                                self.delegate?.didDownloadPhotoWithID(photo.id)
+                                completion(.success(actualPhoto))
                             case .failure(let err):
-                                print("Error downloading photo: \(err)")
-                            }
-                        })
-                    }
-            case .failure(let err):
-                print("Error downloading JSON file \(err)")
-            }
-        })
+                            let error = NSError(domain: "json.download", code: -1, userInfo:["Reason": "Unable to download photo at downloadPhoto method"])
+                            completion(.failure(error))
+                            print("Error downloading photo: \(err)")}})
     }
-    
 }
-
-

@@ -17,11 +17,9 @@ protocol APITarget {
 
 extension APITarget {
     var host : String {
-        return "www.flickr.com"
+        return ConfigRepository.getHost() ?? "No host at ConfigRepo()"
     }
-    var queryItems: [URLQueryItem]? {
-        return [URLQueryItem(name: "api_key", value: "8c5d03d43a4e14e8b80aafc5a1120f4b")]
-    }
+
     var scheme : String? {
         return "https"
     }
@@ -34,7 +32,8 @@ enum PhotosAPITarget {
 extension PhotosAPITarget: APITarget {
     var path: String {
         switch self {
-        case .photos: return "/services/rest/"
+        case .photos:
+            return ConfigRepository.getPath() ?? "No path at ConfigRepo"
         }
        
     }
@@ -42,12 +41,12 @@ extension PhotosAPITarget: APITarget {
     var method: Method {
         switch self {
         case .photos: return .get
+            //rawvalue, избавиться, передаю снаружи
         }
     }
     
     var queryItems: [URLQueryItem]? {
-        let queryItem : [URLQueryItem] = [URLQueryItem(name: "method", value: "flickr.photos.getRecent"), URLQueryItem(name: "api_key", value: "8c5d03d43a4e14e8b80aafc5a1120f4b"), URLQueryItem(name: "format", value: "json"), URLQueryItem(name: "nojsoncallback", value: "1"), URLQueryItem(name: "nojsoncallback", value: "1")]
-      
+        let queryItem : [URLQueryItem] = [URLQueryItem(name: "method", value: "flickr.photos.getRecent"), URLQueryItem(name: "api_key", value: ConfigRepository.getAPIKey()), URLQueryItem(name: "format", value: "json"), URLQueryItem(name: "nojsoncallback", value: "1")]
         return queryItem
     }
     
