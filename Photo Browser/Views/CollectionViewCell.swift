@@ -12,7 +12,7 @@ class CollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var photoImageView: UIImageView!
     static let cellID = "ImageCell"
     var photoID : String?
-    func updateImageView() {
+    func updateImageViewLayer() {
             DispatchQueue.main.async {
                 self.photoImageView.contentMode = .scaleAspectFill
                 self.photoImageView.layer.cornerRadius = 10

@@ -10,7 +10,7 @@ import Foundation
 protocol PhotoDataProviderProtocol {
     func photo(byID id : String, completion: @escaping (Result<Data?, Error>) -> Void)
     func fetchPhotos(_ completion: @escaping (Result<[PhotoObject], Error>) -> Void)
-    var photoModel : [PhotoObject] {get set}
+    var photoModel: [PhotoObject] {get set}
 }
 
 class PhotoDataProvider : PhotoDataProviderProtocol {

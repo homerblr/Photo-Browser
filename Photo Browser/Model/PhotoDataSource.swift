@@ -35,8 +35,8 @@ class PhotoDataSource: PhotoDataSourceProtocol {
                         Networking.downloadPhoto(url: url, competionHandler: {
                             result in
                             switch result {
-                            case .success(let actualPhoto):
-                                completion(.success(actualPhoto))
+                            case .success(let data):
+                                completion(.success(data))
                             case .failure(let err):
                             let error = NSError(domain: "json.download", code: -1, userInfo:["Reason": "Unable to download photo at downloadPhoto method"])
                             completion(.failure(error))

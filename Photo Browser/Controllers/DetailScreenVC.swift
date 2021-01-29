@@ -20,9 +20,9 @@ class DetailScreenVC: UICollectionViewController {
         guard let photoDataProvider = photoDataProvider else {return}
         photoModel = photoDataProvider.photoModel
         if let selectedPhoto = selectedPhotoID {
-            guard let index = photoModel
+            guard let selectedPhotoIndex = photoModel
                     .firstIndex(where: {$0.id == selectedPhoto}) else {return}
-            collectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: true)
+            collectionView.scrollToItem(at: IndexPath(item: selectedPhotoIndex, section: 0), at: .centeredHorizontally, animated: true)
             collectionView.isPagingEnabled = true
         }
     }
@@ -48,7 +48,7 @@ class DetailScreenVC: UICollectionViewController {
                 print(error.localizedDescription)
             }}
         }
-        cell.updateImageView()
+        cell.updateImageViewLayer()
         return cell
     }
 }
