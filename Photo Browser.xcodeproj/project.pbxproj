@@ -23,7 +23,6 @@
 		CB47890D25B1DE10001A4D91 /* PhotoDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB47890C25B1DE10001A4D91 /* PhotoDataSource.swift */; };
 		CB92A45525B6D23F00FB6B7E /* DetailScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB92A45425B6D23F00FB6B7E /* DetailScreenVC.swift */; };
 		CB92A45D25B8A5DA00FB6B7E /* DetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB92A45C25B8A5DA00FB6B7E /* DetailCollectionViewCell.swift */; };
-		CB92A46825B98C6800FB6B7E /* PhotoDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB92A46725B98C6800FB6B7E /* PhotoDataService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,7 +45,6 @@
 		CB47890C25B1DE10001A4D91 /* PhotoDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDataSource.swift; sourceTree = "<group>"; };
 		CB92A45425B6D23F00FB6B7E /* DetailScreenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailScreenVC.swift; sourceTree = "<group>"; };
 		CB92A45C25B8A5DA00FB6B7E /* DetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCollectionViewCell.swift; sourceTree = "<group>"; };
-		CB92A46725B98C6800FB6B7E /* PhotoDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDataService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,7 +100,6 @@
 				CB030E0225C17DF700964D3C /* PhotoDataProvider.swift */,
 				CB47890C25B1DE10001A4D91 /* PhotoDataSource.swift */,
 				CB030E0525C17E3B00964D3C /* PhotoDataCache.swift */,
-				CB92A46725B98C6800FB6B7E /* PhotoDataService.swift */,
 				CB4788F925AF22A1001A4D91 /* FetchPhotoResponse.swift */,
 			);
 			path = Model;
@@ -214,7 +211,6 @@
 			files = (
 				CB030E0325C17DF700964D3C /* PhotoDataProvider.swift in Sources */,
 				CB4788E725AF202F001A4D91 /* MainScreenVC.swift in Sources */,
-				CB92A46825B98C6800FB6B7E /* PhotoDataService.swift in Sources */,
 				CB030E0625C17E3B00964D3C /* PhotoDataCache.swift in Sources */,
 				CB4788FD25AF273A001A4D91 /* Networking.swift in Sources */,
 				CB030DFC25BF4C2000964D3C /* ConfigRepository.swift in Sources */,
