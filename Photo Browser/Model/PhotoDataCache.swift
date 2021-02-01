@@ -24,7 +24,7 @@ class PhotoDataCache: PhotoDataCacheProtocol
             self.directoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         } else {
             do {
-               try FileManager.default.createDirectory(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].path, withIntermediateDirectories: true, attributes: nil)
+                try FileManager.default.createDirectory(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].path, withIntermediateDirectories: true, attributes: nil)
                 self.directoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
             }
             catch {
@@ -36,23 +36,30 @@ class PhotoDataCache: PhotoDataCacheProtocol
     
     func readPhoto(withID id: String, imageFormat: ImageFormat, completion: (Result<Data?, Error>) -> Void) {
         var data: Data?
+        guard let directoryURL = directoryURL else {
+            let error = NSError(domain: "photoDataCache.readPhoto", code: -1, userInfo:["Reason": "Directory URL is nil"])
+            completion(.failure(error))
+            return }
         let fileURL = URL(fileURLWithPath: id, relativeTo: directoryURL).appendingPathExtension(imageFormat.rawValue)
-            do {
-                data = try Data(contentsOf: fileURL)
-                completion(.success(data))
-            } catch {
-                let error = NSError(domain: "photoDataCache.readPhoto", code: -1, userInfo:["Reason": "Can't read photo"])
-                completion(.failure(error))
-            }
+        do {
+            data = try Data(contentsOf: fileURL)
+            completion(.success(data))
+        } catch {
+            let error = NSError(domain: "photoDataCache.readPhoto", code: -1, userInfo:["Reason": "Can't read photo"])
+            completion(.failure(error))
+        }
     }
     
     func save(photoData: Data, withID id: String, imageFormat: ImageFormat, completion: (Error?) -> Void) {
+        guard let directoryURL = directoryURL else {
+            let error = NSError(domain: "photoDataCache.savePhoto", code: -1, userInfo:["Reason": "Directory URL is nil"])
+            return completion(error)}
         let fileURL = URL(fileURLWithPath: id, relativeTo: directoryURL).appendingPathExtension(imageFormat.rawValue)
-            do {
-                try photoData.write(to: fileURL)
-            } catch {
-                print("Can't save photo to disk, \(error.localizedDescription)")
-            }
+        do {
+            try photoData.write(to: fileURL)
+        } catch {
+            print("Can't save photo to disk, \(error.localizedDescription)")
+        }
     }
-   
+    
 }

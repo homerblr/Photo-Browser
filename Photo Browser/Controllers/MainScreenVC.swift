@@ -32,7 +32,6 @@ class MainScreenVC: UIViewController {
         }
     }
 }
-
 //MARK: Delegate and Datasource
 extension MainScreenVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -50,11 +49,11 @@ extension MainScreenVC: UICollectionViewDelegate, UICollectionViewDataSource {
             switch result {
             case .success(let photoData):
                 guard let photoData = photoData else {return}
-                    if photoID == cell.photoID {
-                        DispatchQueue.main.async {
-                            cell.photoImageView.image = UIImage(data: photoData)
-                        }
+                if photoID == cell.photoID {
+                    DispatchQueue.main.async {
+                        cell.photoImageView.image = UIImage(data: photoData)
                     }
+                }
             case .failure(let error):
                 print(error.localizedDescription)
             }
