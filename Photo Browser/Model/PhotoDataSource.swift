@@ -15,7 +15,7 @@ protocol PhotoDataSourceProtocol {
 class PhotoDataSource: PhotoDataSourceProtocol {
     
     func fetchPhotoList(_ completion: @escaping (Result<[PhotoObject], Error>) -> Void) {
-        Networking.fetchData(PhotosAPITarget.photos, FetchPhotoResponse.self, competionHandler: {
+        Networking.fetchData(PhotosAPITarget.getPhotos, FetchPhotoResponse.self, competionHandler: {
             result in
             switch result {
             case .success(let jsonData):

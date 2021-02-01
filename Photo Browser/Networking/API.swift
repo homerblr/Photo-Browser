@@ -26,22 +26,20 @@ extension APITarget {
 }
 
 enum PhotosAPITarget {
-    case photos
+    case getPhotos
 }
 
 extension PhotosAPITarget: APITarget {
     var path: String {
         switch self {
-        case .photos:
+        case .getPhotos:
             return ConfigRepository.getPath() ?? "No path at ConfigRepo"
         }
-       
     }
     
     var method: Method {
         switch self {
-        case .photos: return .get
-            //rawvalue, избавиться, передаю снаружи
+        case .getPhotos: return .get
         }
     }
     
