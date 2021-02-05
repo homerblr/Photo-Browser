@@ -8,9 +8,8 @@
 import UIKit
 
 class DetailScreenVC: UICollectionViewController {
-    private var photoModel : [PhotoObject]?
     var selectedPhotoID : String?
-    var photoDataProvider : PhotoDataProviderProtocol?
+    var viewModel : DetailScreenViewModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,10 +17,9 @@ class DetailScreenVC: UICollectionViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        guard let photoDataProvider = photoDataProvider else {return}
-        photoModel = photoDataProvider.photoModel
+        guard let viewModel = viewModel else {return}
         if let selectedPhoto = selectedPhotoID {
-            guard let selectedPhotoIndex = photoModel?
+            guard let selectedPhotoIndex = viewModel.photoProvider.photoModel
                     .firstIndex(where: {$0.id == selectedPhoto}) else {return}
             collectionView.scrollToItem(at: IndexPath(item: selectedPhotoIndex, section: 0), at: .centeredHorizontally, animated: true)
             collectionView.isPagingEnabled = true
@@ -29,30 +27,12 @@ class DetailScreenVC: UICollectionViewController {
     }
     // MARK: UICollectionViewDataSource
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photoModel?.count ?? 0
-       
+        return viewModel?.photoProvider.photoModel.count ?? 0
+        
     }
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailCollectionViewCell.cellID, for: indexPath) as! DetailCollectionViewCell
-        if let photoModel = photoModel {
-            cell.photoID = photoModel[indexPath.row].id
-            let photoID = photoModel[indexPath.row].id
-            if let photoDataProvider = photoDataProvider {
-            photoDataProvider.photo(byID: photoID) {  [photoID] (result) in
-                switch result {
-                case .success(let photoData):
-                    guard let photoData = photoData else {return}
-                        if photoID == cell.photoID {
-                            DispatchQueue.main.async {
-                                cell.detailPhotoImageView.image = UIImage(data: photoData)
-                            }
-                        }
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }}
-            }
-        }
-        cell.updateImageViewLayer()
+        viewModel?.configureCell(forIndexPath: indexPath, cell: cell)
         return cell
     }
 }
@@ -62,5 +42,5 @@ extension DetailScreenVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let frameSize = collectionView.frame.size
         return CGSize(width: frameSize.width, height: frameSize.height)
-}
+    }
 }

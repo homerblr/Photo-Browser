@@ -14,10 +14,15 @@ class DetailCollectionViewCell: UICollectionViewCell {
     static let cellID = "DetailCell"
     var photoID : String?
     
-    func updateImageViewLayer() {
+    private func updateImageViewLayer() {
         DispatchQueue.main.async {
             self.detailPhotoImageView.contentMode = .scaleAspectFit
         }
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        updateImageViewLayer()
     }
     required init?(coder: NSCoder) {
         super.init(coder: coder)

@@ -10,7 +10,7 @@ import Foundation
 protocol PhotoDataProviderProtocol {
     func photo(byID id : String, completion: @escaping (Result<Data?, Error>) -> Void)
     func fetchPhotos(_ completion: @escaping (Result<[PhotoObject], Error>) -> Void)
-    var photoModel: [PhotoObject] {get set}
+    var photoModel: [PhotoObject] {get}
 }
 
 class PhotoDataProvider : PhotoDataProviderProtocol {
@@ -21,7 +21,7 @@ class PhotoDataProvider : PhotoDataProviderProtocol {
     
     private var loader: PhotoDataSourceProtocol
     private var cache: PhotoDataCacheProtocol
-    var photoModel: [PhotoObject]
+    var photoModel = [PhotoObject]()
     var photoObjectArray = [PhotoRepresentable]()
     
     func fetchPhotos(_ completion: @escaping (Result<[PhotoObject], Error>) -> Void) {
@@ -29,6 +29,7 @@ class PhotoDataProvider : PhotoDataProviderProtocol {
             switch result {
             case .success(let photoObject):
                 self?.photoObjectArray = photoObject
+                self?.photoModel.append(contentsOf: photoObject)
                 completion(.success(photoObject))
             case .failure(let error):
                 completion(.failure(error))
@@ -54,9 +55,8 @@ class PhotoDataProvider : PhotoDataProviderProtocol {
             }
         }
     }
-    init(loader: PhotoDataSource, cache: PhotoDataCache, photoModel: [PhotoObject]) {
+    init(loader: PhotoDataSource, cache: PhotoDataCache) {
         self.loader = loader
         self.cache = cache
-        self.photoModel = photoModel
     }
 }

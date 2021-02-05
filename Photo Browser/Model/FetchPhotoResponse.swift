@@ -43,7 +43,7 @@ struct PhotoObject: Codable {
         self.secret = try container.decode(String.self, forKey: .secret)
         self.server = try container.decode(String.self, forKey: .server)
         self.farm = try container.decode(Int.self, forKey: .farm)
-        self.title = try container.decode(String.self, forKey: .title)
+        self.title = (try? container.decode(String.self, forKey: .title)) ?? ""
         self.isPublic = try container.decode(Int.self, forKey: .isPublic)
         self.isFriend = try container.decode(Int.self, forKey: .isFriend)
         self.isFamily = try container.decode(Int.self, forKey: .isFamily)

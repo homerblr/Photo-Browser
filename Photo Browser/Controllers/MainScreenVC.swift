@@ -10,55 +10,30 @@ import UIKit
 class MainScreenVC: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
-    var photoModel : [PhotoObject] = []
+    var viewModel : MainScreenViewModel?
     let segueID = "goToDetail"
-    lazy var photoProvider: PhotoDataProviderProtocol = PhotoDataProvider(loader: PhotoDataSource(), cache: PhotoDataCache(), photoModel: photoModel)
     
+    func reloadCollectionData() {
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.collectionViewLayout = createLayout()
-        photoProvider.fetchPhotos {
-            [weak self] (result) in
-            guard let self = self else { return }
-            switch result {
-            case .success(let listOfPhotos):
-                self.photoModel = listOfPhotos
-                DispatchQueue.main.async {
-                    self.collectionView.reloadData()
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
+        viewModel = MainScreenViewModel()
+        viewModel?.fetchPhotoModel(completion: reloadCollectionData)
     }
 }
 //MARK: Delegate and Datasource
 extension MainScreenVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photoModel.count
+        return viewModel?.photoModel.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCell.cellID, for: indexPath) as! CollectionViewCell
-        cell.photoID = photoModel[indexPath.row].id
-        let photoID = photoModel[indexPath.row].id
-        DispatchQueue.main.async {
-            cell.photoImageView.image = nil
-        }
-        photoProvider.photo(byID: photoID) {  [photoID] (result) in
-            switch result {
-            case .success(let photoData):
-                guard let photoData = photoData else {return}
-                if photoID == cell.photoID {
-                    DispatchQueue.main.async {
-                        cell.photoImageView.image = UIImage(data: photoData)
-                    }
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-        cell.updateImageViewLayer()
+        viewModel?.configureCell(forIndexPath: indexPath, cell: cell)
         return cell
     }
     
@@ -71,10 +46,9 @@ extension MainScreenVC: UICollectionViewDelegate, UICollectionViewDataSource {
         if segue.identifier == segueID {
             guard let destinationVC = segue.destination as? DetailScreenVC else {return}
             guard let row = (sender as? NSIndexPath)?.row else {return}
-            let selectedPhotoID = photoModel[row].id
+            let selectedPhotoID = viewModel?.photoModel[row].id
             destinationVC.selectedPhotoID = selectedPhotoID
-            photoProvider.photoModel = photoModel
-            destinationVC.photoDataProvider = photoProvider as? PhotoDataProvider
+            destinationVC.viewModel = DetailScreenViewModel(photoProvider: viewModel?.photoProvider as! PhotoDataProviderProtocol)
         }
     }
 }
