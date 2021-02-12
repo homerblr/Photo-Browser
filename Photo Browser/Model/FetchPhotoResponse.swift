@@ -36,6 +36,8 @@ struct PhotoObject: Codable {
         case isFriend = "isfriend"
         case isFamily = "isfamily"
     }
+
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(String.self, forKey: .id)

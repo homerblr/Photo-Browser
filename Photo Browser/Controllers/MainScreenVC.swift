@@ -8,9 +8,10 @@
 import UIKit
 
 class MainScreenVC: UIViewController {
-    
+    @IBOutlet weak var updateFeedButton: RefreshButton!
     @IBOutlet weak var collectionView: UICollectionView!
-    var viewModel : MainScreenViewModel?
+    
+    var viewModel : IMainScreenViewModel?
     let segueID = "goToDetail"
     
     func reloadCollectionData() {
@@ -18,12 +19,22 @@ class MainScreenVC: UIViewController {
             self.collectionView.reloadData()
         }
     }
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.collectionViewLayout = createLayout()
         viewModel = MainScreenViewModel()
-        viewModel?.fetchPhotoModel(completion: reloadCollectionData)
+        viewModel?.boxPhotoModel.bind(listener: { _ in
+            self.reloadCollectionData()
+        })
+        viewModel?.fetchPhotoModel()
+        viewModel?.loadingButtonBox.bind(listener: updateFeedButton.changeState(_:))
     }
+  
+    @IBAction func updateFeedButtonPressed() {
+        viewModel?.fetchPhotoModel()
+    }
+    
 }
 //MARK: Delegate and Datasource
 extension MainScreenVC: UICollectionViewDelegate, UICollectionViewDataSource {

@@ -66,9 +66,16 @@
                             <constraint firstAttribute="trailing" secondItem="a1w-Gc-Soe" secondAttribute="trailing" id="nsT-4l-cPD"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Photo Browser" id="zRf-9V-SNO"/>
+                    <navigationItem key="navigationItem" title="Photo Browser" id="zRf-9V-SNO">
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="ooV-a1-QOS" customClass="RefreshButton" customModule="Photo_Browser" customModuleProvider="target">
+                            <connections>
+                                <action selector="updateFeedButtonPressed" destination="BYZ-38-t0r" id="EyL-MN-ezH"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="a1w-Gc-Soe" id="7id-LG-HDZ"/>
+                        <outlet property="updateFeedButton" destination="ooV-a1-QOS" id="UID-cm-tXP"/>
                         <segue destination="81y-Uj-P3x" kind="show" identifier="goToDetail" id="wOG-wZ-k7b"/>
                     </connections>
                 </viewController>

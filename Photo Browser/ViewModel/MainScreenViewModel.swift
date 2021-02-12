@@ -7,19 +7,32 @@
 
 import UIKit
 
-class MainScreenViewModel {
-    
+protocol IMainScreenViewModel {
+    func fetchPhotoModel()
+    func configureCell(forIndexPath indexPath: IndexPath, cell: CollectionViewCell)
+    var boxPhotoModel : Box<[PhotoObject]> {get}
+    var photoModel : [PhotoObject] {get}
+    var photoProvider: PhotoDataProviderProtocol {get}
+    var loadingButtonBox: Box<ButtonState> {get}
+}
+
+class MainScreenViewModel: IMainScreenViewModel {
     var photoModel : [PhotoObject] = []
     var photoProvider: PhotoDataProviderProtocol = PhotoDataProvider(loader: PhotoDataSource(), cache: PhotoDataCache())
     
-    func fetchPhotoModel(completion: @escaping () -> ()) {
+    var boxPhotoModel: Box<[PhotoObject]> = Box([PhotoObject]())
+    let loadingButtonBox = Box<ButtonState>(.doingNothing)
+    
+    func fetchPhotoModel() {
+        loadingButtonBox.value = .downloading
         photoProvider.fetchPhotos {
             [weak self] (result) in
             guard let self = self else { return }
             switch result {
-            case .success( _):
-                self.photoModel = self.photoProvider.photoModel
-                completion()
+            case .success(let response):
+                self.photoModel = response
+                self.boxPhotoModel.value = response
+                self.loadingButtonBox.value = .doingNothing
             case .failure(let error):
                 print(error.localizedDescription)
             }

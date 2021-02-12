@@ -9,6 +9,7 @@ import UIKit
 
 class DetailScreenVC: UICollectionViewController {
     var selectedPhotoID : String?
+    //protocol IDetailScreenViewModel
     var viewModel : DetailScreenViewModel?
     
     override func viewDidLoad() {

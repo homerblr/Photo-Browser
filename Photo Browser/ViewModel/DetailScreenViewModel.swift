@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DetailScreenViewModel {
+class DetailScreenViewModel: NSObject {
     var photoModel : [PhotoObject] = []
     var photoProvider: PhotoDataProviderProtocol
     
