@@ -8,9 +8,10 @@
 import UIKit
 
 class MainScreenVC: UIViewController {
-    @IBOutlet weak var updateFeedButton: RefreshButton!
     @IBOutlet weak var collectionView: UICollectionView!
-    
+    var activityIndicator = UIActivityIndicatorView()
+    var refreshBarButton = UIBarButtonItem()
+    var activityBarButton = UIBarButtonItem()
     var viewModel : IMainScreenViewModel?
     let segueID = "goToDetail"
     
@@ -19,22 +20,57 @@ class MainScreenVC: UIViewController {
             self.collectionView.reloadData()
         }
     }
- 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        activityIndicator.sizeToFit()
+        activityIndicator.color = self.view.tintColor
+        activityBarButton = UIBarButtonItem(customView: activityIndicator)
+        refreshBarButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshBarButtonPressed))
+        showRefreshButton()
+        
         collectionView.collectionViewLayout = createLayout()
         viewModel = MainScreenViewModel()
         viewModel?.boxPhotoModel.bind(listener: { _ in
             self.reloadCollectionData()
         })
         viewModel?.fetchPhotoModel()
-        viewModel?.loadingButtonBox.bind(listener: updateFeedButton.changeState(_:))
-    }
-  
-    @IBAction func updateFeedButtonPressed() {
-        viewModel?.fetchPhotoModel()
+        viewModel?.loadingButtonBox.bind(listener: changeState(_:))
     }
     
+    
+    func performNetworkOperation(completion: @escaping()->()) {
+        DispatchQueue.main.async {
+            completion()
+        }
+    }
+    
+    @objc func refreshBarButtonPressed() {
+        performNetworkOperation {
+            self.viewModel?.fetchPhotoModel()
+        }
+    }
+    
+    func showRefreshButton() {
+        self.navigationItem.setRightBarButton(refreshBarButton, animated: true)
+    }
+    
+    func showActivityIndicator() {
+        self.navigationItem.setRightBarButton(activityBarButton, animated: true)
+    }
+    
+    func changeState(_ state: ButtonState) {
+        DispatchQueue.main.async {
+            switch state {
+            case .doingNothing:
+                self.activityIndicator.stopAnimating()
+                self.showRefreshButton()
+            case .downloading:
+                self.showActivityIndicator()
+                self.activityIndicator.startAnimating()
+            }
+        }
+    }
 }
 //MARK: Delegate and Datasource
 extension MainScreenVC: UICollectionViewDelegate, UICollectionViewDataSource {

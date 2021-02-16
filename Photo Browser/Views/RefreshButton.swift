@@ -13,6 +13,7 @@ enum ButtonState {
 }
 
 class RefreshButton: UIBarButtonItem {
+
     func changeState(_ state: ButtonState) {
         DispatchQueue.main.async {
             switch state {
@@ -20,7 +21,9 @@ class RefreshButton: UIBarButtonItem {
                 self.title = "Ready"
             case .downloading:
                 self.title = "Downloading..."
+
             }
         }
     }
+    
 }
